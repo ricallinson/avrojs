@@ -21,7 +21,9 @@
 //    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 //    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-var fs = require('fs'), a = require('avro');
+var fs = require('fs'),
+    a = require('../'),
+    fixtures = './fixtures/';
 
 function AssertException(message) { this.message = message; }
 AssertException.prototype.toString = function () {
@@ -39,7 +41,7 @@ function assert_json(val, expected) {
     assert(got === expected, "Got " + got + "; expected " + expected);
 }
 
-var schema = JSON.parse(fs.readFileSync('search.avsc', 'utf8'));
+var schema = JSON.parse(fs.readFileSync(fixtures + 'search.avsc', 'utf8'));
 
 assert_json(a.decode(schema, a.encode(schema, {"query":"search"})), '{"query":"search"}');
 
@@ -87,7 +89,7 @@ assert_json(a.decode(union_schema, a.encode(union_schema, 1)), '1');
 
 assert_json(a.decode(union_schema, a.encode(union_schema, "abc")), '"abc"');
 
-var profile_created_schema = JSON.parse(fs.readFileSync('ProfileCreate.avsc', 'utf8'));
+var profile_created_schema = JSON.parse(fs.readFileSync(fixtures + 'ProfileCreate.avsc', 'utf8'));
 
 var returnPolicy = {"description": "return policy 1"};
 
@@ -116,7 +118,7 @@ val = a.decode(profile_created_schema, a.encode(profile_created_schema, profile_
 
 assert_json(val, '{"p":{"xId":null,"name":"name","siteCode":null,"xAccountId":"id","payment":null,"shipping":{"shippingLocaleServices":[{"rateType":"FLAT","localeType":"DOMESTIC","applyPromotionalShippingRule":true,"shippingServiceOptions":[{"sellerPriority":1,"serviceName":"service","cost":{"amount":5,"code":"USD"},"discountAmount":null,"additionalCost":null,"packagingHandlingCost":null,"surcharge":null,"shipToLocations":null}]}]},"returnPolicy":{"description":"return policy 1","returnAccepted":null,"buyerPaysReturnShipping":null,"returnByDays":null,"refundMethod":null},"marketSpecifics":null}}');
 
-var inventory_schema = JSON.parse(fs.readFileSync('Inventory.avsc', 'utf8'));
+var inventory_schema = JSON.parse(fs.readFileSync(fixtures + 'Inventory.avsc', 'utf8'));
 
 var inventory = {
     "items": [ {"sku":"123", "title":"my title", "currentPrice": "1.00", "url": "http://x.com", "dealOfTheDay": "true"},
@@ -130,15 +132,15 @@ var nested_schema = JSON.parse('{"type":"record","name":"SearchRequest", "versio
 
 console.log(a.decode(nested_schema, a.encode(nested_schema, JSON.parse('{"query":"x","xyz": {"sub":"abc"}}'))));
 
-var producttype_get_schema = JSON.parse(fs.readFileSync('get', 'utf8'));
+var producttype_get_schema = JSON.parse(fs.readFileSync(fixtures + 'get', 'utf8'));
 
 var get = {"locale": {"language": "EN", "country": "US"}};
 
 a.encode(producttype_get_schema, get);
 
-var producttype_get_succeeded_schema = JSON.parse(fs.readFileSync('getSucceeded.avsc', 'utf8'));
+var producttype_get_succeeded_schema = JSON.parse(fs.readFileSync(fixtures + 'getSucceeded.avsc', 'utf8'));
 
-var get_succeeded = fs.readFileSync('getSucceeded.bin', 'binary');
+var get_succeeded = fs.readFileSync(fixtures + 'getSucceeded.bin', 'binary');
 
 console.log(a.decode(producttype_get_succeeded_schema, get_succeeded));
 

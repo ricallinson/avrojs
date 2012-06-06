@@ -1,5 +1,13 @@
 {
-    "name": "avro",
-    "description": "Avro",
-    "version": "0.0.1"
+    "name": "avrojs",
+    "description": "Avro JS",
+    "version": "0.0.1",
+    "author": {
+        "name": "Richard S Allinson",
+        "email": "rsa@mounitainmansoftware.com"
+    },
+    "main": "index",
+    "engines": {
+        "node": ">= 0.6.0 < 0.7.0"
+    }
 }
