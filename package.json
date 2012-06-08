@@ -7,7 +7,18 @@
         "email": "rsa@mounitainmansoftware.com"
     },
     "main": "index",
+    "scripts": {
+        "test": "node ./tests/run.js"
+    },
     "engines": {
         "node": ">= 0.6.0"
-    }
+    },
+    "devDependencies": {
+        "yui": "3.5.x"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/capecodehq/avrojs.git"
+    },
+    "license": "MIT"
 }
